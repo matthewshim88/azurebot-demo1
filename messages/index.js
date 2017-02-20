@@ -8,8 +8,8 @@ require('datejs');
 
 //setup Connector
 const connector = new botbuilder_azure.BotServiceConnector({
-  appId: process.env.appId,
-  appPassword: process.env.appPassword,
+  appId: process.env['appId'],
+  appPassword: process.env['appPassword'],
   stateEndpoint: process.env['BotStateEndpoint'],
   openIdMetadata: process.env['BotOpenIdMetadata']
 })
