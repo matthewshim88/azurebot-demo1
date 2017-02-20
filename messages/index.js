@@ -1,24 +1,20 @@
 const builder = require('botbuilder');
+const botbuilder_azure = require('botbuilder-azure');
 const movieDB = require('moviedb')(process.env.moviedb_key);
-const restify = require('restify');
 const wordsToNum = require('words-to-num');
 const request = require('superagent');
 require('datejs');
-const genres = require('./genres.js');
 
-//setup Server
-const server = restify.createServer();
-server.listen(3978, () =>
-  console.log('%s listening to %s', server.name, server.url)
-);
 
 //setup Connector
-const connector = new builder.ChatConnector({
+const connector = new botbuilder_azure.BotServiceConnector({
   appId: process.env.appId,
-  appPassword: process.env.appPassword
+  appPassword: process.env.appPassword,
+  stateEndpoint: process.env['BotStateEndpoint'],
+  openIdMetadata: process.env['BotOpenIdMetadata']
 })
 const bot = new builder.UniversalBot(connector);
-server.post('/api/messages', connector.listen());
+
 
 //setup LUIS 
 const luisURL = 'westus.api.cognitive.microsoft.com/luis/v2.0/apps';
@@ -31,6 +27,57 @@ bot.dialog('/', intents);
 
 const imgBaseUrl = 'https://image.tmdb.org/t/p/';
 const posterSize = 'w185';
+
+const genres = {
+  action: {
+    id: 28,
+  },
+  adventure: {
+    id: 12,
+  },
+  animation: {
+    id: 16,
+  },
+  comedy: {
+    id: 35,
+  },
+  documentary: {
+    id: 99,
+  },
+  drama: {
+    id: 18,
+  },
+  horror: {
+    id: 27,
+  },
+  mystery: {
+    id: 9648,
+  },
+  romance: {
+    id: 10749,
+  },
+  music: {
+    id: 10402,
+  },
+  thriller: {
+    id: 53,
+  },
+  war : {
+    id: 10752,
+  },
+  western : {
+    id : 37,
+  },
+  scifi : {
+    id: 878,
+  }, 
+  crime : {
+    id: 80
+  },
+  '(quit)': {
+    id: 0,
+  },
+};
 
 
 const getMovie = (session) => {
@@ -203,3 +250,5 @@ bot.dialog('/yearPrompt', [
     session.endDialogWithResult({ response: matched });
   }
 ]);
+
+module.expots = { default: connector.listen()};
