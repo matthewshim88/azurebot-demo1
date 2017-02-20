@@ -1,10 +1,10 @@
 {
-  "name": "ms-moviebot",
+  "name": "emptybot",
   "version": "1.0.1",
-  "description": "First Project with MS Bot Framework",
+  "description": "",
   "main": "index.js",
   "dependencies": {
-    "botbuilder": "^3.4.2",
+    "botbuilder": "^3.6.0",
     "botbuilder-azure": "0.0.1",
     "datejs": "^1.0.0-rc3",
     "moviedb": "^0.2.7",
@@ -17,6 +17,6 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "MShim following Esteban Herrera at SitePoint.com",
+  "author": "",
   "license": "ISC"
 }
